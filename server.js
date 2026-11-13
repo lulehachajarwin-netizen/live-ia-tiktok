@@ -17,7 +17,7 @@ const path = require('path');
 const http = require('http');
 const WebSocket = require('ws');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const { WebcastPushConnection } = require('tiktok-live-connector');
+const { TikTokLiveConnection } = require('tiktok-live-connector');
 
 // ---------- Cargar .env si existe (sin dependencias extra) ----------
 (function loadEnv() {
@@ -171,12 +171,11 @@ let reconnectTimer = null;
 
 function connectTikTok() {
   console.log('[tiktok] Conectando al live de @' + TIKTOK_USERNAME + '...');
-  tiktok = new WebcastPushConnection(TIKTOK_USERNAME, {
+  tiktok = new TikTokLiveConnection(TIKTOK_USERNAME, {
     processInitialData: false,
     fetchRoomInfoOnConnect: true,
     enableExtendedGiftInfo: true,
-    enableWebsocketUpgrade: true,
-  });
+  })    ;
 
   tiktok.connect()
     .then((state) => {
